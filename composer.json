@@ -1,0 +1,11 @@
+{
+    "name": "bryant/psr4-project",
+    "require": {},
+    "autoload": {
+    "psr-4": {
+    "MiniMarkPlace\\Controllers\\": "src/Controllers/",
+    "MiniMarkPlace\\Libraries\\": "src/Libraries/"
+            }
+        }
+    }
+    
