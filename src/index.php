@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use MiniMarkPlace\Libraries\Routing;
 use MiniMarkPlace\Controllers\ProductCategoryController;
@@ -8,28 +8,39 @@ use MiniMarkPlace\Controllers\ProductCategoryController;
 $router = new Routing();
 
 $router->add('GET', '/', function() {
-    return 'Selamat datang di Web Kami!';
+    return 'Welcome to Our Website!';
 });
 
 $router->add('GET', '/about', function() {
-    return 'Web Kami adalah web Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
+    return 'Our website is a Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
 });
 
 $router->add('GET', '/product-category', function() {
     include __DIR__ . '/views/product_category.php';
 });
 
-$router->add('GET', '/product-category/:id',[ProductCategoryController::class, 'show']);
-$router->add('POST', '/product-category', [ProductCategoryController::class, 'store']);
-$router->add('PUT', '/product-category/:id', [ProductCategoryController::class, 'update']);
-$router->add('DELETE', '/product-category/:id', [ProductCategoryController::class, 'delete']);
+$router->add('GET', '/product-category/:id', [ProductCategoryController::class, 'show']);
+$router->add('POST', '/product-category', function() {
+    $name = $_POST['name'] ?? '';
+    $controller = new ProductCategoryController();
+    return $controller->store($name);
+});
+$router->add('PUT', '/product-category/:id', function($id) {
+    $name = $_POST['name'] ?? '';
+    $controller = new ProductCategoryController();
+    return $controller->update((int)$id, $name);
+});
+$router->add('DELETE', '/product-category/:id', function($id) {
+    $controller = new ProductCategoryController();
+    return $controller->delete((int)$id);
+});
 
-
-// Jika ingin tershow di web wkwkwk
+// Jika ingin tershow di web
 //$router->add('POST', '/product-category', function() {
 //    $controller = new ProductCategoryController();
 //    $controller->handleRequest();
 //});
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +48,6 @@ $router->add('DELETE', '/product-category/:id', [ProductCategoryController::clas
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PSR4-AUTOLOAD</title>
-    <!-- Link CDN Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 text-gray-900">
