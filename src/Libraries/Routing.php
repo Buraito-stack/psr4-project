@@ -23,8 +23,7 @@ class Routing
             foreach ($this->routes[$method] as $route => $callback) {
 
                 // Ganti :id dengan (\d+) untuk menangkap parameter ID
-                $regexPattern = str_replace(['/', ':id'], ['\/', '(\d+)'], $route);
-                
+                $regexPattern = str_replace(['/', ':id'], ['\/', '(\d+)'], $route);              
                 $regexPattern = "#^{$regexPattern}$#";
 
                 if (preg_match($regexPattern, $uri, $params)) {
