@@ -26,7 +26,7 @@ class Routing
                 $regexPattern = "#^{$regexPattern}$#";
 
                 if (preg_match($regexPattern, $uri, $params)) {
-                    array_shift($params); // Remove the first element, which is the full match
+                    array_shift($params); 
                     if (is_callable($callback)) {
                         $response = call_user_func_array($callback, $params);
                     } else {
@@ -34,7 +34,7 @@ class Routing
                         $instance = new $controller();
                         $response = $instance->$method(...$params);
                     }
-                    break; // Exit loop after finding the first match
+                    break; 
                 }
             }
         }
