@@ -21,12 +21,15 @@ class Routing
 
         if (isset($this->routes[$method])) {
             foreach ($this->routes[$method] as $route => $callback) {
+
                 // Ganti :id dengan (\d+) untuk menangkap parameter ID
                 $regexPattern = str_replace(['/', ':id'], ['\/', '(\d+)'], $route);
+                
                 $regexPattern = "#^{$regexPattern}$#";
 
                 if (preg_match($regexPattern, $uri, $params)) {
                     array_shift($params); 
+                    
                     if (is_callable($callback)) {
                         $response = call_user_func_array($callback, $params);
                     } else {
@@ -34,6 +37,7 @@ class Routing
                         $instance = new $controller();
                         $response = $instance->$method(...$params);
                     }
+
                     break; 
                 }
             }
